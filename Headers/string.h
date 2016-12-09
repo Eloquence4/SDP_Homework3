@@ -17,73 +17,73 @@
 
 enum STRING_ERRORS
 {
-	ILLEGAL_INDEX,
-	STRING_IS_EMPTY
+    ILLEGAL_INDEX,
+    STRING_IS_EMPTY
 };
 
 class string
 {
 public:
-	////////////// G4
-	string();                             // O(1)
-	~string();                            // O(1)
-	string& operator=(const string& rhs); // O(n), O(1) if this == &rhs
-	string(const string& source);         // O(n)
-	/////////////////
+    ////////////// G4
+    string();                             // O(1)
+    ~string();                            // O(1)
+    string& operator=(const string& rhs); // O(n), O(1) if this == &rhs
+    string(const string& source);         // O(n)
+    /////////////////
 
-	string(const char* initText); // O(n)
+    string(const char* initText); // O(n)
 
-	size_t size() const;    // O(1), Returns max string length
-	size_t length() const;  // O(1), Returns the string length
-	size_t max_size() const;// O(1), Returns max string size before having to resize
+    size_t size() const;    // O(1), Returns max string length
+    size_t length() const;  // O(1), Returns the string length
+    size_t max_size() const;// O(1), Returns max string size before having to resize
 
-	void resize(size_t targetSize); // O(n), Resizes the string
-	void reserve(size_t howMuch);   // O(n), Resizes the string to the current size + howMuch
+    void resize(size_t targetSize); // O(n), Resizes the string
+    void reserve(size_t howMuch);   // O(n), Resizes the string to the current size + howMuch
 
-	bool empty() const; // O(1), Check if empty
+    bool empty() const; // O(1), Check if empty
 
-	char& operator[](int index);		// O(1), Unstable, throws ILLEGAL_INDEX
-	char& operator[](size_t index);		// O(1), Unstable, throws ILLEGAL_INDEX
-	char operator[](int index) const;	// O(1), Unstable, throws ILLEGAL_INDEX
-	char operator[](size_t index) const;// O(1), Unstable, throws ILLEGAL_INDEX
-	char& at(int index);				// O(1), Unstable, throws ILLEGAL_INDEX
-	char& at(size_t index);				// O(1), Unstable, throws ILLEGAL_INDEX
-	char at(int index) const;			// O(1), Unstable, throws ILLEGAL_INDEX
-	char at(size_t index) const;		// O(1), Unstable, throws ILLEGAL_INDEX
+    char& operator[](int index);        // O(1), Unstable, throws ILLEGAL_INDEX
+    char& operator[](size_t index);     // O(1), Unstable, throws ILLEGAL_INDEX
+    char operator[](int index) const;   // O(1), Unstable, throws ILLEGAL_INDEX
+    char operator[](size_t index) const;// O(1), Unstable, throws ILLEGAL_INDEX
+    char& at(int index);                // O(1), Unstable, throws ILLEGAL_INDEX
+    char& at(size_t index);             // O(1), Unstable, throws ILLEGAL_INDEX
+    char at(int index) const;           // O(1), Unstable, throws ILLEGAL_INDEX
+    char at(size_t index) const;        // O(1), Unstable, throws ILLEGAL_INDEX
 
-	char& front();		// O(1), unstable, throws STRING_IS_EMPTY
-	char& back();		// O(1), unstable, throws STRING_IS_EMPTY
-	char front() const;	// O(1), unstable, throws STRING_IS_EMPTY
-	char back() const;	// O(1), unstable, throws STRING_IS_EMPTY
+    char& front();      // O(1), unstable, throws STRING_IS_EMPTY
+    char& back();       // O(1), unstable, throws STRING_IS_EMPTY
+    char front() const; // O(1), unstable, throws STRING_IS_EMPTY
+    char back() const;  // O(1), unstable, throws STRING_IS_EMPTY
 
-	string& operator+=(const string& rhs);		// O(n) or O(2n) if no additional space is reserved
-	string operator+(const string& rhs) const;	// O(n) or O(2n) if no additional space is reserved
-	void append(const string& rhs);				// O(1) or O(n) if no additional space is reserved
+    string& operator+=(const string& rhs);      // O(n) or O(2n) if no additional space is reserved
+    string operator+(const string& rhs) const;  // O(n) or O(2n) if no additional space is reserved
+    void append(const string& rhs);             // O(1) or O(n) if no additional space is reserved
 
-	string& operator+=(const char* rhs);		// O(n) or O(2n) if no additional space is reserved
-	string operator+(const char* rhs) const;	// O(n) or O(2n) if no additional space is reserved
-	void append(const char* rhs);				// O(1) or O(n) if no additional space is reserved
+    string& operator+=(const char* rhs);        // O(n) or O(2n) if no additional space is reserved
+    string operator+(const char* rhs) const;    // O(n) or O(2n) if no additional space is reserved
+    void append(const char* rhs);               // O(1) or O(n) if no additional space is reserved
 
-	string& operator+=(char rhs);		// O(1) or O(n) if no additional space is reserved
-	string operator+(char rhs) const;	// O(1) or O(n) if no additional space is reserved
-	void append(char rhs);				// O(1) or O(n) if no additional space is reserved
+    string& operator+=(char rhs);       // O(1) or O(n) if no additional space is reserved
+    string operator+(char rhs) const;   // O(1) or O(n) if no additional space is reserved
+    void append(char rhs);              // O(1) or O(n) if no additional space is reserved
 
-	bool operator==(const string& rhs) const; // O(n)
-	bool operator!=(const string& rhs) const; // O(n)
+    bool operator==(const string& rhs) const; // O(n)
+    bool operator!=(const string& rhs) const; // O(n)
 
-	operator const char*() const; // O(1)
+    operator const char*() const; // O(1)
 
-	void clear(); // O(1)
-	void shrink();// O(n)
+    void clear(); // O(1)
+    void shrink();// O(n)
 
 private:
 
-	void delStr(); // O(1)
-	void copy(const char* newText, size_t newMaxSize); // O(n)
+    void delStr(); // O(1)
+    void copy(const char* newText, size_t newMaxSize); // O(n)
 
-	char* text;
-	size_t maxSize;
-	size_t curSize;
+    char* text;
+    size_t maxSize;
+    size_t curSize;
 };
 
 #endif // StringDef
