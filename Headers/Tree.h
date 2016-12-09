@@ -26,40 +26,6 @@ struct Node
 };
 
 template<typename VarType>
-class TreeIterator;
-
-template<typename VarType>
-class Tree;
-
-template<typename VarType>
-class TreeIterator
-{
-public:
-
-    TreeIterator(Tree& _source);
-
-    void goToSibling();
-    void goToSuccessor();
-
-    bool leaf() const;
-
-    void addSibling();
-    void addSuccessor();
-
-    void deleteCur();
-
-private:
-
-    void deleteAll(Node* node);
-
-    Tree& source;
-    Node* pos;
-
-};
-
-#include "../HPPs/TreeIterator.hpp"
-
-template<typename VarType>
 class Tree
 {
 public:
@@ -80,15 +46,16 @@ public:
 
     void remove(const VarType& key);
 
-    friend TreeIterator;
+#include "TreeIterator.h"
+
+    TreeIterator top();
 
 private:
 
-    void copy(const Node& _top);
+    void copy(const Node<VarType>& _top);
     void clear();
 
-    Node* top;
-
+    Node<VarType>* top;
 };
 
 #include "../HPPs/Tree.hpp"
