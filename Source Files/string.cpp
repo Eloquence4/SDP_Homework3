@@ -323,6 +323,18 @@ void string::shrink()
     maxSize = curSize;
 }
 
+void string::assign(string& source)
+{
+    delete[] text;
+    maxSize = source.maxSize;
+    curSize = source.maxSize;
+    text = source.text;
+
+    source.text = nullptr;
+    source.maxSize = 0;
+    source.curSize = 0;
+}
+
 /////////////// Private
 
 void string::delStr()
