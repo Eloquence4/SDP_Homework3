@@ -12,7 +12,7 @@
  *
  */
 #include <iostream>
-#include "string.h"
+#include "../Headers/string.h"
 
 /////////////// G4
 
