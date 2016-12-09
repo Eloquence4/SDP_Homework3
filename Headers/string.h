@@ -76,6 +76,8 @@ public:
     void clear(); // O(1)
     void shrink();// O(n)
 
+    void assign(string& source); // O(1), this becomes source, source becomes empty
+
 private:
 
     void delStr(); // O(1)
