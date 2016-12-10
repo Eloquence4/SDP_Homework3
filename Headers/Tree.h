@@ -50,7 +50,7 @@ public:
     VarType& search(const VarType& key);
     const VarType& search(const VarType& key) const;
 
-    void add(const VarType& what);
+    void add(const VarType& what);// O(1), Adds a sibling to the top, inserts it between top and its first sibling
 
     void remove(const VarType& key);
 
@@ -61,7 +61,8 @@ public:
 private:
 
     void copy(const Node<VarType>& _top);
-    void clear();
+    void clear();                       // O(n)
+    void clear(Node<VarType>* node);    // O(n)
 
     Node<VarType>* top;
 };

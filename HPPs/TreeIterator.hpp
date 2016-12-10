@@ -7,11 +7,11 @@ public:
     
     friend class Tree;
 
-    VarType& data();            // O(1)
-    const VarType& data() const;// O(1)
+    VarType& data();            // O(1), unstable, throws POINTER_IS_NULL
+    const VarType& data() const;// O(1), unstable, throws POINTER_IS_NULL
 
-    void goToSibling();   // O(1)
-    void goToSuccessor(); // O(1)
+    void goToSibling();   // O(1), unstable, throws SIBLING_IS_NULL
+    void goToSuccessor(); // O(1), unstable, throws SUCCESSOR_IS_NULL
 
     bool leaf() const;    // O(1)
 
@@ -32,7 +32,6 @@ private:
 
     Node<VarType>** first;
     Node<VarType>* ptr;
-
 };
 
 inline VarType& TreeIterator::data()
@@ -71,13 +70,13 @@ inline bool TreeIterator::leaf() const
 
 inline void TreeIterator::addSibling(const VarType& data)
 {
-    Node* newNode = new Node(data, ptr->Sibling, nullptr);
+    Node<VarType>* newNode = new Node<VarType>(data, ptr->Sibling, nullptr);
     ptr->Sibling = newNode;
 }
 
 inline void TreeIterator::addSuccessor(const VarType & data)
 {
-    Node* newNode = new Node(data, ptr->Successor, nullptr);
+    Node<VarType>* newNode = new Node<VarType>(data, ptr->Successor, nullptr);
     ptr->Successor = newNode;
 }
 
@@ -111,12 +110,10 @@ inline void TreeIterator::deleteAll(Node<VarType>* node)
 {
     if(node == nullptr)
         return;
-    else
-    {
-        deleteAll(node->Successor);
-        deleteAll(node->Sibling);
-        delete node;
-    }
+
+    deleteAll(node->Successor);
+    deleteAll(node->Sibling);
+    delete node;
 }
 
 #endif // TreeIteratorDef
