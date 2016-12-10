@@ -17,8 +17,10 @@ public:
 
     void addSibling(const VarType& data);  // O(1), Iterator stays in the same place, inserts the new
                                            // sibling between current node and its sibling to prevent O(n)
+                                           // Unstable, throws POINTER_IS_NULL if iterator is empty
     void addSuccessor(const VarType& data);// O(1), Iterator stays in the same place, the new
                                            // successor becomes the first child to prevent O(n)
+                                           // Unstable, throws POINTER_IS_NULL if iterator is empty
 
     void deleteCur(); // O(n), Goes to the next sibling after deletion
                       // Goes back to the top if there is no sibling
@@ -70,13 +72,19 @@ inline bool TreeIterator::leaf() const
 
 inline void TreeIterator::addSibling(const VarType& data)
 {
-    Node<VarType>* newNode = new Node<VarType>(data, ptr->Sibling, nullptr);
+    if(ptr == nullptr)
+        throw POINTER_IS_NULL;
+
+    Node<VarType>* newNode = new Node<VarType>(data, ptr->Sibling);
     ptr->Sibling = newNode;
 }
 
 inline void TreeIterator::addSuccessor(const VarType & data)
 {
-    Node<VarType>* newNode = new Node<VarType>(data, ptr->Successor, nullptr);
+    if(ptr == nullptr)
+        throw POINTER_IS_NULL;
+
+    Node<VarType>* newNode = new Node<VarType>(data, ptr->Successor);
     ptr->Successor = newNode;
 }
 
