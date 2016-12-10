@@ -6,6 +6,14 @@ enum TREE_ERRORS
     SEARCH_NO_RESULT
 };
 
+enum TREE_ITERATOR_ERRORS
+{
+    POINTER_IS_NULL,
+    SIBLING_IS_NULL,
+    SUCCESSOR_IS_NULL,
+    ITERATOR_IS_INVALID
+};
+
 template<typename VarType>
 struct Node
 {
@@ -46,9 +54,9 @@ public:
 
     void remove(const VarType& key);
 
-#include "TreeIterator.h"
+#include "../HPPs/TreeIterator.hpp"
 
-    TreeIterator top();
+    TreeIterator front();
 
 private:
 
