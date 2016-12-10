@@ -1,5 +1,5 @@
-#ifndef TreeIteratorDec
-#define TreeIteratorDec
+#ifndef TreeIteratorDef
+#define TreeIteratorDef
 
 class TreeIterator
 {
@@ -119,4 +119,4 @@ inline void TreeIterator::deleteAll(Node<VarType>* node)
     }
 }
 
-#endif
+#endif // TreeIteratorDef
