@@ -47,20 +47,26 @@ public:
 
     ////////////
 
-    VarType& search(const VarType& key);
-    const VarType& search(const VarType& key) const;
+    VarType& search(const VarType& key);            // O(n), unstable, throws SEARCH_NO_RESULT
+    const VarType& search(const VarType& key) const;// O(n), unstable, throws SEARCH_NO_RESULT
 
-    void add(const VarType& what);// O(1), Adds a sibling to the top, inserts it between top and its first sibling
+    void add(const VarType& what);   // O(1), Adds a sibling to the top, inserts it between top and its first sibling
 
-    void remove(const VarType& key);
+    void remove(const VarType& key); // O(n), removes the first node it finds with the key, searches successors first
+    void remove_all(const VarType& key); // O(n), removes all the nodes
 
 #include "../HPPs/TreeIterator.hpp"
 
     TreeIterator front();
 
 private:
+    VarType& search(const Node<VarType>* node, const VarType& key);
+    const VarType& search(const Node<VarType>* node, const VarType& key) const;
 
-    void copy(const Node<VarType>& _top);
+    bool remove(Node<VarType>* node, const VarType& key);
+
+    void copy(const Node<VarType>* _top);                   // O(1), only copies the top
+    void copy(const Node<VarType>* from, Node<VarType>* to);// O(n), copies successors and sibblings
     void clear();                       // O(n)
     void clear(Node<VarType>* node);    // O(n)
 
