@@ -52,9 +52,6 @@ public:
 
     void add(const VarType& what);   // O(1), Adds a sibling to the top, inserts it between top and its first sibling
 
-    void remove(const VarType& key); // O(n), removes the first node it finds with the key, searches successors first
-    void remove_all(const VarType& key); // O(n), removes all the nodes
-
 #include "../HPPs/TreeIterator.hpp"
 
     TreeIterator front();

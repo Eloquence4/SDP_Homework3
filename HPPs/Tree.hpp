@@ -38,7 +38,7 @@ inline VarType& Tree<VarType>::search(const VarType& key)
 }
 
 template<typename VarType>
-inline const VarType & Tree<VarType>::search(const VarType & key) const
+inline const VarType& Tree<VarType>::search(const VarType & key) const
 {
     return search(top, key);
 }
@@ -48,14 +48,6 @@ inline void Tree<VarType>::add(const VarType& what)
 {
     Node<VarType>* newNode = new Node<VarType>(what, top->Sibling, nullptr);
     ptr->Sibling = newNode;
-}
-
-template<typename VarType>
-inline void Tree<VarType>::remove(const VarType& key)
-{
-    if(!top)
-        return;
-    remove(top, key);
 }
 
 template<typename VarType>
@@ -112,12 +104,6 @@ inline const VarType& Tree<VarType>::search(const Node<VarType>* node, const Var
                 return search(node->Sibling, key);
         }
     }
-}
-
-template<typename VarType>
-inline bool Tree<VarType>::remove(Node<VarType>* node, const VarType & key)
-{
-    
 }
 
 template<typename VarType>

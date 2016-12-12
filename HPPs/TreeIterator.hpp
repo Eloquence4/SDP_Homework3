@@ -22,10 +22,6 @@ public:
                                            // successor becomes the first child to prevent O(n)
                                            // Unstable, throws POINTER_IS_NULL if iterator is empty
 
-    void deleteCur(); // O(n), Goes to the next sibling after deletion
-                      // Goes back to the top if there is no sibling
-                      // Also deletes all successors
-
 private:
 
     TreeIterator(Node<VarType>* _ptr); // O(1)
@@ -86,27 +82,6 @@ inline void TreeIterator::addSuccessor(const VarType & data)
 
     Node<VarType>* newNode = new Node<VarType>(data, ptr->Successor);
     ptr->Successor = newNode;
-}
-
-inline void TreeIterator::deleteCur()
-{
-    deleteAll(ptr->Successor);
-    if(ptr->Sibling == nullptr)
-    {
-        delete ptr;
-        if(ptr == *first)
-            *first = nullptr;
-        else
-            ptr = *first;
-    }
-    else
-    {
-        Node<VarType>* temp = ptr->Sibling;
-        ptr->Data = temp->Data;
-        ptr->Successor = temp->Successor;
-        ptr->Sibling = temp->Sibling;
-        delete temp;
-    }
 }
 
 inline TreeIterator::TreeIterator(Node<VarType>* _ptr)
