@@ -15,19 +15,21 @@ inline Tree<VarType>::~Tree()
 }
 
 template<typename VarType>
-inline Tree<VarType>::Tree(const Tree& source)
+inline Tree<VarType>::Tree(const Tree<VarType>& source)
     : top(nullptr)
 {
     copy(source.top);
 }
 
 template<typename VarType>
-inline Tree& Tree<VarType>::operator=(const Tree& rhs)
+inline Tree<VarType>& Tree<VarType>::operator=(const Tree<VarType>& rhs)
 {
-    if(this == &rhs)
-        return;
-    copy(rhs.top);
+    if(this != &rhs)
+        copy(rhs.top);
+    return *this;
 }
+
+
 
 /////////////////////////////////////////////////////////////// Public
 
@@ -46,14 +48,10 @@ inline const VarType& Tree<VarType>::search(const VarType & key) const
 template<typename VarType>
 inline void Tree<VarType>::add(const VarType& what)
 {
-    Node<VarType>* newNode = new Node<VarType>(what, top->Sibling, nullptr);
-    ptr->Sibling = newNode;
-}
-
-template<typename VarType>
-inline TreeIterator Tree<VarType>::front()
-{
-    return TreeIterator(top);
+    if(top == nullptr)
+        top = new Node<VarType>(what);
+    else
+        top->Sibling = new Node<VarType>(what, top->Sibling);
 }
 
 /////////////////////////////////////////////////////////////// Private

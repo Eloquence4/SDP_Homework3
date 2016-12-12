@@ -42,8 +42,8 @@ public:
 
     Tree();
     ~Tree();
-    Tree(const Tree& source);
-    Tree& operator=(const Tree& rhs);
+    Tree(const Tree<VarType>& source);
+    Tree<VarType>& operator=(const Tree<VarType>& rhs);
 
     ////////////
 
@@ -54,13 +54,14 @@ public:
 
 #include "../HPPs/TreeIterator.hpp"
 
-    TreeIterator front();
+    TreeIterator front()
+    {
+        return TreeIterator(top);
+    }
 
 private:
     VarType& search(const Node<VarType>* node, const VarType& key);
     const VarType& search(const Node<VarType>* node, const VarType& key) const;
-
-    bool remove(Node<VarType>* node, const VarType& key);
 
     void copy(const Node<VarType>* _top);                   // O(1), only copies the top
     void copy(const Node<VarType>* from, Node<VarType>* to);// O(n), copies successors and sibblings
