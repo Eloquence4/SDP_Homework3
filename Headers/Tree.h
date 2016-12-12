@@ -60,7 +60,7 @@ public:
     }
 
 private:
-    VarType& search(const Node<VarType>* node, const VarType& key);
+    VarType& search(Node<VarType>* node, const VarType& key);
     const VarType& search(const Node<VarType>* node, const VarType& key) const;
 
     void copy(const Node<VarType>* _top);                   // O(1), only copies the top

@@ -78,7 +78,7 @@ private:
         , ptr(_ptr)
     { }
 
-    // O(n^2) Deletes every child and sibling to the given node
+    // O(n) Deletes every child and sibling to the given node
     void deleteAll(Node<VarType>* node)
     {
         if(node == nullptr)

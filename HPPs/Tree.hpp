@@ -29,8 +29,6 @@ inline Tree<VarType>& Tree<VarType>::operator=(const Tree<VarType>& rhs)
     return *this;
 }
 
-
-
 /////////////////////////////////////////////////////////////// Public
 
 template<typename VarType>
@@ -57,7 +55,7 @@ inline void Tree<VarType>::add(const VarType& what)
 /////////////////////////////////////////////////////////////// Private
 
 template<typename VarType>
-inline VarType& Tree<VarType>::search(const Node<VarType>* node, const VarType& key)
+inline VarType& Tree<VarType>::search(Node<VarType>* node, const VarType& key)
 {
     if(!node)
         throw SEARCH_NO_RESULT;

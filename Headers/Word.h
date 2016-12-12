@@ -1,13 +1,14 @@
-#ifndef NodeDef
+#ifndef WordDef
+#define WordDef
 
 #include "string.h"
 
 struct Word
 {
     string phrase;
-    int points;
+    double points;
 
-    Word(string _phrase = string(), int _points = 0)
+    Word(string _phrase = string(), double _points = 0)
         : phrase(_phrase)
         , points(_points)
     {	};
