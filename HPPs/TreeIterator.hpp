@@ -16,7 +16,7 @@ public:
     // O(n), unstable, throws SEARCH_NO_RESULT
     TreeIterator search(const VarType& key)
     {
-        return search(ptr, key);
+        return search(ptr->Successor, key);
     }
 
     // O(1), unstable, throws POINTER_IS_NULL
