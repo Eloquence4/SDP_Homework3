@@ -47,9 +47,6 @@ public:
 
     ////////////
 
-    VarType& search(const VarType& key);            // O(n), unstable, throws SEARCH_NO_RESULT
-    const VarType& search(const VarType& key) const;// O(n), unstable, throws SEARCH_NO_RESULT
-
     void add(const VarType& what);   // O(1), Adds a sibling to the top, inserts it between top and its first sibling
 
 #include "../HPPs/TreeIterator.hpp"
@@ -59,9 +56,63 @@ public:
         return TreeIterator(top);
     }
 
+    // O(n), unstable, throws SEARCH_NO_RESULT
+    TreeIterator& search(const VarType& key)
+    {
+        return search(top, key);
+    }
+    // O(n), unstable, throws SEARCH_NO_RESULT
+    const TreeIterator& search(const VarType& key) const
+    {
+        return search(top, key);
+    }
+
 private:
-    VarType& search(Node<VarType>* node, const VarType& key);
-    const VarType& search(const Node<VarType>* node, const VarType& key) const;
+    VarType& search(Node<VarType>* node, const VarType& key)
+    {
+        if(!node)
+            throw SEARCH_NO_RESULT;
+
+        if(node->Data == key)
+        {
+            return TreeIterator(top, node);
+        }
+        else
+        {
+            try
+            {
+                return search(node->Successor, key);
+            }
+            catch(TREE_ERRORS& err)
+            {
+                if(err == SEARCH_NO_RESULT)
+                    return search(node->Sibling, key);
+            }
+        }
+    }
+
+    const VarType& search(const Node<VarType>* node, const VarType& key) const
+    {
+        if(!node)
+            throw SEARCH_NO_RESULT;
+
+        if(node->Data == key)
+        {
+            return TreeIterator(top, node);
+        }
+        else
+        {
+            try
+            {
+                return search(node->Successor, key);
+            }
+            catch(TREE_ERRORS& err)
+            {
+                if(err == SEARCH_NO_RESULT)
+                    return search(node->Sibling, key);
+            }
+        }
+    }
 
     void copy(const Node<VarType>* _top);                   // O(1), only copies the top
     void copy(const Node<VarType>* from, Node<VarType>* to);// O(n), copies successors and sibblings

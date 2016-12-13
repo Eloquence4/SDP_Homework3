@@ -32,18 +32,6 @@ inline Tree<VarType>& Tree<VarType>::operator=(const Tree<VarType>& rhs)
 /////////////////////////////////////////////////////////////// Public
 
 template<typename VarType>
-inline VarType& Tree<VarType>::search(const VarType& key)
-{
-    return search(top, key);
-}
-
-template<typename VarType>
-inline const VarType& Tree<VarType>::search(const VarType & key) const
-{
-    return search(top, key);
-}
-
-template<typename VarType>
 inline void Tree<VarType>::add(const VarType& what)
 {
     if(top == nullptr)
@@ -53,54 +41,6 @@ inline void Tree<VarType>::add(const VarType& what)
 }
 
 /////////////////////////////////////////////////////////////// Private
-
-template<typename VarType>
-inline VarType& Tree<VarType>::search(Node<VarType>* node, const VarType& key)
-{
-    if(!node)
-        throw SEARCH_NO_RESULT;
-
-    if(node->Data == key)
-    {
-        return node->Data;
-    }
-    else
-    {
-        try
-        {
-            return search(node->Successor, key);
-        }
-        catch(TREE_ERRORS& err)
-        {
-            if(err == SEARCH_NO_RESULT)
-                return search(node->Sibling, key);
-        }
-    }
-}
-
-template<typename VarType>
-inline const VarType& Tree<VarType>::search(const Node<VarType>* node, const VarType & key) const
-{
-    if(!node)
-        throw SEARCH_NO_RESULT;
-
-    if(node->Data == key)
-    {
-        return node->Data;
-    }
-    else
-    {
-        try
-        {
-            return search(node->Successor, key);
-        }
-        catch(TREE_ERRORS& err)
-        {
-            if(err == SEARCH_NO_RESULT)
-                return search(node->Sibling, key);
-        }
-    }
-}
 
 template<typename VarType>
 inline void Tree<VarType>::copy(const Node<VarType>* _top)

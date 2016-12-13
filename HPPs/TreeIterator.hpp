@@ -77,6 +77,11 @@ private:
         : first(&_ptr)
         , ptr(_ptr)
     { }
+    // O(1)
+    TreeIterator(Node<VarType>* _top, Node<VarType>* _node)
+        : first(&_top)
+        , ptr(_node)
+    { }
 
     // O(n) Deletes every child and sibling to the given node
     void deleteAll(Node<VarType>* node)

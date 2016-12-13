@@ -73,6 +73,7 @@ void loadDictionary(Tree<Word>& tree, std::fstream& file)
     char buffer[BUFFER_MAX_SIZE];
     char a;
     file.getline(buffer, std::numeric_limits<std::streamsize>::max());
+    // rest
 }
 
 
