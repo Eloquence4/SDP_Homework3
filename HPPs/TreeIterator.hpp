@@ -13,10 +13,18 @@ public:
         return ptr->Data;
     }
 
-    // O(n), unstable, throws SEARCH_NO_RESULT
-    TreeIterator search(const VarType& key)
+    // O(n), searches for a successor, unstable, throws SEARCH_NO_RESULT
+    // Requires operator== defined for VarType
+    TreeIterator searchSucc(const VarType& key)
     {
-        return search(ptr->Successor, key);
+        return searchSucc(ptr, key);
+    }
+
+    // O(n), searches for a sibling, unstable, throws SEARCH_NO_RESULT
+    // Requires operator== defined for VarType
+    TreeIterator searchSib(const VarType& key)
+    {
+        return searchSib(ptr, key);
     }
 
     // O(1), unstable, throws POINTER_IS_NULL
@@ -54,14 +62,15 @@ public:
 
     // O(1), Iterator stays in the same place, inserts the new
     // sibling between current node and its sibling to prevent O(n)
-    // Unstable, throws POINTER_IS_NULL if iterator is empty
     void addSibling(const VarType& data)
     {
         if(ptr == nullptr)
             throw POINTER_IS_NULL;
-
-        Node<VarType>* newNode = new Node<VarType>(data, ptr->Sibling);
-        ptr->Sibling = newNode;
+        else
+        {
+            Node<VarType>* newNode = new Node<VarType>(data, ptr->Sibling);
+            ptr->Sibling = newNode;
+        }
     }
 
     // O(1), Iterator stays in the same place, the new
@@ -74,6 +83,12 @@ public:
 
         Node<VarType>* newNode = new Node<VarType>(data, ptr->Successor);
         ptr->Successor = newNode;
+    }
+
+    // O(1), checks if the iterator is valid
+    bool valid() const
+    {
+        return ptr != nullptr;
     }
 
 private:
@@ -99,27 +114,26 @@ private:
         delete node;
     }
 
-    TreeIterator search(Node<VarType>* node, const VarType& key)
+    TreeIterator searchSucc(Node<VarType>* node, const VarType& key)
     {
         if(!node)
             throw SEARCH_NO_RESULT;
 
-        if(node->Data == key)
-        {
+        if(key == node->Data)
             return TreeIterator(*first, node);
-        }
         else
-        {
-            try
-            {
-                return search(node->Successor, key);
-            }
-            catch(TREE_ERRORS& err)
-            {
-                if(err == SEARCH_NO_RESULT)
-                    return search(node->Sibling, key);
-            }
-        }
+            return searchSucc(node->Successor, key);
+    }
+
+    TreeIterator searchSib(Node<VarType>* node, const VarType& key)
+    {
+        if(!node)
+            throw SEARCH_NO_RESULT;
+
+        if(key == node->Data)
+            return TreeIterator(*first, node);
+        else
+            return searchSib(node->Sibling, key);
     }
 
     Node<VarType>** first;
