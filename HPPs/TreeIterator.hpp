@@ -13,11 +13,11 @@ public:
         return ptr->Data;
     }
 
-    // O(n), searches for a successor, unstable, throws SEARCH_NO_RESULT
+    // O(n), unstable, throws SEARCH_NO_RESULT
     // Requires operator== defined for VarType
-    TreeIterator searchSucc(const VarType& key)
+    TreeIterator search(const VarType& key)
     {
-        return searchSucc(ptr, key);
+        return search(ptr, key);
     }
 
     // O(n), searches for a sibling, unstable, throws SEARCH_NO_RESULT
@@ -114,15 +114,27 @@ private:
         delete node;
     }
 
-    TreeIterator searchSucc(Node<VarType>* node, const VarType& key)
+    TreeIterator search(Node<VarType>* node, const VarType& key)
     {
         if(!node)
             throw SEARCH_NO_RESULT;
 
-        if(key == node->Data)
+        if(node->Data == key)
+        {
             return TreeIterator(*first, node);
+        }
         else
-            return searchSucc(node->Successor, key);
+        {
+            try
+            {
+                return search(node->Successor, key);
+            }
+            catch(TREE_ERRORS& err)
+            {
+                if(err == SEARCH_NO_RESULT)
+                    return search(node->Sibling, key);
+            }
+        }
     }
 
     TreeIterator searchSib(Node<VarType>* node, const VarType& key)

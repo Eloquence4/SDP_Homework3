@@ -102,7 +102,13 @@ void loadDictionary(Tree<Word>& tree, std::fstream& file)
         {
             try
             {
-                it = it.searchSib(buffer);
+                if(first)
+                    it = it.searchSib(buffer);
+                else
+                {
+                    it.goToSuccessor();
+                    it = it.searchSib(buffer);
+                }
             }
             catch(TREE_ERRORS& err)
             {
@@ -126,6 +132,11 @@ void loadDictionary(Tree<Word>& tree, std::fstream& file)
                         it.addSuccessor(Word(int(), buffer));
                         it.goToSuccessor();
                     }
+                }
+                else if(err == SUCCESSOR_IS_NULL)
+                {
+                    it.addSuccessor(Word(int(), buffer));
+                    it.goToSuccessor();
                 }
             }
             first = false;

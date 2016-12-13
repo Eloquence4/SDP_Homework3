@@ -77,26 +77,20 @@ void string::resize(size_t targetSize)
         return;
     }
 
-    if(maxSize == 0)
-    {
-        maxSize = targetSize;
-        text = new char[targetSize+1];
-        text[0] = '\0';
-        return;
-    }
-
     char* newString = new char[targetSize+1];
 
     if(!empty())
-    if(targetSize > maxSize)
-        for(size_t i = 0; i <= curSize; i++)
-            newString[i] = text[i];
+        if(targetSize > maxSize)
+            for(size_t i = 0; i <= curSize; i++)
+                newString[i] = text[i];
+        else
+        {
+            for(size_t i = 0; i < targetSize-1; i++)
+                newString[i] = text[i];
+            newString[targetSize-1] = '\0';
+        }
     else
-    {
-        for(size_t i = 0; i < targetSize-1; i++)
-            newString[i] = text[i];
-        newString[targetSize-1] = '\0';
-    }
+        newString[1] = '\0';
 
     maxSize = targetSize;
     delete[] text;
