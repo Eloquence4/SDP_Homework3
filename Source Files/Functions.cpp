@@ -2,6 +2,8 @@
 
 bool checkIfNumber(const char* str)
 {
+    bool point = false;
+
     if(*str == '-')
         str++;
     if(*str == '\0')
@@ -9,7 +11,11 @@ bool checkIfNumber(const char* str)
 
     do
     {
-        if(*str < '0' && *str > '9')
+        if(*str == '.')
+            point = true;
+        if(point && *str == '.')
+            return false;
+        if(*str < '0' || *str > '9')
             return false;
         
         ++str;
@@ -29,7 +35,7 @@ double charToNum(char a)
     return a - '0';
 }
 
-double strToNum(char* str)
+double strToNum(const char* str)
 {
     double res = 0;
     double multiplier = 1;
@@ -70,10 +76,61 @@ double strToNum(char* str)
 
 void loadDictionary(Tree<Word>& tree, std::fstream& file)
 {
-    char buffer[BUFFER_MAX_SIZE];
-    char a;
-    file.getline(buffer, std::numeric_limits<std::streamsize>::max());
-    // rest
+    string buffer;
+    bool first = true;
+    buffer.resize(BUFFER_MAX_SIZE);
+
+    auto it = tree.front();
+
+    while(file.good())
+    {
+        buffer.resize(BUFFER_MAX_SIZE);
+        file >> buffer;
+        buffer.shringToFit();
+
+        if(first && checkIfNumber(buffer))
+            throw INVALID_DICTIONARY_FORMAT;
+        
+        if(checkIfNumber(buffer))
+        {
+            it.data().points = strToNum(buffer);
+
+            it = tree.front();
+            first = true;
+        }
+        else
+        {
+            try
+            {
+                it = it.searchSib(buffer);
+            }
+            catch(TREE_ERRORS& err)
+            {
+                if(err == SEARCH_NO_RESULT)
+                {
+                    if(first)
+                    {
+                        if(it.valid()) // It would only be invalid if the tree was just initialized and the iterator is null
+                        {
+                            it.addSibling(Word(int(), buffer));
+                            it.goToSibling();
+                        }
+                        else
+                        {
+                            tree.add(Word(int(), buffer));
+                            it = tree.front();
+                        }
+                    }
+                    else
+                    {
+                        it.addSuccessor(Word(int(), buffer));
+                        it.goToSuccessor();
+                    }
+                }
+            }
+            first = false;
+        }
+    }
 }
 
 
