@@ -77,6 +77,14 @@ void string::resize(size_t targetSize)
         return;
     }
 
+    if(maxSize == 0)
+    {
+        maxSize = targetSize;
+        text = new char[targetSize+1];
+        text[0] = '\0';
+        return;
+    }
+
     char* newString = new char[targetSize+1];
 
     if(!empty())
@@ -98,6 +106,11 @@ void string::resize(size_t targetSize)
 void string::reserve(size_t howMuch)
 {
     resize(maxSize + howMuch);
+}
+
+void string::shringToFit()
+{
+    resize(curSize + 1);
 }
 
 bool string::empty() const
@@ -333,6 +346,13 @@ void string::assign(string& source)
     source.text = nullptr;
     source.maxSize = 0;
     source.curSize = 0;
+}
+
+std::istream& operator>>(std::istream& lhs, string& rhs)
+{
+    lhs >> rhs.text;
+    rhs.curSize = strlen(rhs.text);
+    return lhs;
 }
 
 /////////////// Private

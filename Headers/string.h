@@ -39,6 +39,7 @@ public:
 
     void resize(size_t targetSize); // O(n), Resizes the string
     void reserve(size_t howMuch);   // O(n), Resizes the string to the current size + howMuch
+    void shringToFit();             // O(n), Resizes the string to fit the current size
 
     bool empty() const; // O(1), Check if empty
 
@@ -77,6 +78,8 @@ public:
     void shrink();// O(n)
 
     void assign(string& source); // O(1), this becomes source, source becomes empty
+
+    friend std::istream& operator>>(std::istream& lhs, string& rhs);
 
 private:
 
