@@ -57,18 +57,18 @@ public:
     }
 
     // O(n), unstable, throws SEARCH_NO_RESULT
-    TreeIterator& search(const VarType& key)
+    TreeIterator search(const VarType& key)
     {
         return search(top, key);
     }
     // O(n), unstable, throws SEARCH_NO_RESULT
-    const TreeIterator& search(const VarType& key) const
+    const TreeIterator search(const VarType& key) const
     {
         return search(top, key);
     }
 
 private:
-    VarType& search(Node<VarType>* node, const VarType& key)
+    TreeIterator search(Node<VarType>* node, const VarType& key)
     {
         if(!node)
             throw SEARCH_NO_RESULT;
@@ -91,7 +91,7 @@ private:
         }
     }
 
-    const VarType& search(const Node<VarType>* node, const VarType& key) const
+    const TreeIterator search(const Node<VarType>* node, const VarType& key) const
     {
         if(!node)
             throw SEARCH_NO_RESULT;

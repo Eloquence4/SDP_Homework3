@@ -13,6 +13,12 @@ public:
         return ptr->Data;
     }
 
+    // O(n), unstable, throws SEARCH_NO_RESULT
+    TreeIterator search(const VarType& key)
+    {
+        return search(ptr, key);
+    }
+
     // O(1), unstable, throws POINTER_IS_NULL
     const VarType& data() const
     {
@@ -71,7 +77,6 @@ public:
     }
 
 private:
-
     // O(1)
     TreeIterator(Node<VarType>* _ptr)
         : first(&_ptr)
@@ -92,6 +97,29 @@ private:
         deleteAll(node->Successor);
         deleteAll(node->Sibling);
         delete node;
+    }
+
+    TreeIterator search(Node<VarType>* node, const VarType& key)
+    {
+        if(!node)
+            throw SEARCH_NO_RESULT;
+
+        if(node->Data == key)
+        {
+            return TreeIterator(*first, node);
+        }
+        else
+        {
+            try
+            {
+                return search(node->Successor, key);
+            }
+            catch(TREE_ERRORS& err)
+            {
+                if(err == SEARCH_NO_RESULT)
+                    return search(node->Sibling, key);
+            }
+        }
     }
 
     Node<VarType>** first;
