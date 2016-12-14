@@ -136,18 +136,122 @@ void loadDictionary(Tree<Word>& tree, std::fstream& file)
                     it.addSuccessor(Word(buffer));
                     it.goToSuccessor();
                 }
+                else
+                    throw err;
             }
             first = false;
         }
     }
 }
 
-double evaluate(std::fstream& file)
+double evaluate(Tree<Word>& dictionary, std::fstream& file)
 {
+    Tree<Word>::TreeIterator it = dictionary.front();
 
+    double result = 0;
 
-    return double();
+    std::streampos index = file.tellg();
+    int wordCount = 0;
+
+    try
+    {
+        while(true)
+        {
+            int words = 0;
+
+            result += evaluate(it, file, index, words);
+
+            wordCount += words;
+
+            it = dictionary.front();
+            file.seekg(index);
+        }
+    }
+    catch(ERRORS& err)
+    {
+        if(err = RECURSION_END)
+        {
+            if(wordCount == 0)
+                return 0;
+
+            return result / wordCount;
+        }
+        else
+            throw err;
+    }
 }
 
+double evaluate(Tree<Word>::TreeIterator& it, std::fstream& file, std::streampos& _index, int& words)
+{
+    if(!file.good())
+        throw RECURSION_END;
 
+    string word;
+    
+    try
+    {
+        getFirstWord(word, file);
+    }
+    catch(ERRORS& err)
+    {
+        if(err = END_OF_FILE)
+            throw RECURSION_END;
+        else
+            throw err;
+    }
+
+    std::streampos index = file.tellg();
+
+    if(words != 0)
+        it.goToSuccessor();
+
+    try
+    {
+        it = it.searchSib(word);
+
+        _index = index;
+        words++;
+
+        if(it.leaf())
+            return it.data().points;
+        else
+            return it.data().points + evaluate(it, file, _index, words);
+
+    }
+    catch(TREE_ERRORS& err)
+    {
+        if(err == SEARCH_NO_RESULT)
+        {
+            if(words == 0)
+            {
+                words++;
+                _index = index;
+            }
+
+            return 0;
+        }
+        else
+            throw err;
+    }
+
+}
+
+void getFirstWord(string& str, std::fstream& file)
+{
+    char g = file.get();
+
+    while(!checkIfLetter(g))
+    {
+        if(!file.good())
+            throw END_OF_FILE;
+        g = file.get();
+    }
+
+    do
+    {
+        str += g;
+        g = file.get();
+    }
+    while(checkIfLetter(g) && file.good());
+}
 
