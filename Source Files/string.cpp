@@ -53,6 +53,23 @@ string::string(const char* initText)
     copy(initText, strlen(initText));
 }
 
+string::string(int, const string& source)
+    : text(nullptr)
+    , maxSize(0)
+    , curSize(0)
+{
+    text = new char[source.curSize + 1];
+
+    int i = source.curSize + 1;
+
+    while(i--)
+        text[i] = source.text[i];
+
+    curSize = source.curSize;
+    maxSize = source.curSize;
+
+}
+
 size_t string::size() const
 {
     return curSize;

@@ -31,7 +31,8 @@ public:
     string(const string& source);         // O(n)
     /////////////////
 
-    string(const char* initText); // O(n)
+    string(const char* initText);      // O(n)
+    string(int, const string& source); // O(n), copies the contents of the string only, without the empty space after
 
     size_t size() const;    // O(1), Returns max string length
     size_t length() const;  // O(1), Returns the string length

@@ -80,13 +80,11 @@ void loadDictionary(Tree<Word>& tree, std::fstream& file)
     bool first = true;
     buffer.resize(BUFFER_MAX_SIZE);
 
-    auto it = tree.front();
+    Tree<Word>::TreeIterator it = tree.front();
 
     while(file.good())
     {
-        buffer.resize(BUFFER_MAX_SIZE);
         file >> buffer;
-        buffer.shringToFit();
 
         if(first && checkIfNumber(buffer))
             throw INVALID_DICTIONARY_FORMAT;
@@ -118,24 +116,24 @@ void loadDictionary(Tree<Word>& tree, std::fstream& file)
                     {
                         if(it.valid()) // It would only be invalid if the tree was just initialized and the iterator is null
                         {
-                            it.addSibling(Word(int(), buffer));
+                            it.addSibling(Word(buffer));
                             it.goToSibling();
                         }
                         else
                         {
-                            tree.add(Word(int(), buffer));
+                            tree.add(Word(buffer));
                             it = tree.front();
                         }
                     }
                     else
                     {
-                        it.addSuccessor(Word(int(), buffer));
+                        it.addSuccessor(Word(buffer));
                         it.goToSuccessor();
                     }
                 }
                 else if(err == SUCCESSOR_IS_NULL)
                 {
-                    it.addSuccessor(Word(int(), buffer));
+                    it.addSuccessor(Word(buffer));
                     it.goToSuccessor();
                 }
             }
@@ -144,7 +142,12 @@ void loadDictionary(Tree<Word>& tree, std::fstream& file)
     }
 }
 
+double evaluate(std::fstream& file)
+{
 
+
+    return double();
+}
 
 
 
