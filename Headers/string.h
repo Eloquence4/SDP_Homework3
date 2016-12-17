@@ -70,6 +70,7 @@ public:
     string operator+(char rhs) const;   // O(1) or O(n) if no additional space is reserved
     void append(char rhs);              // O(1) or O(n) if no additional space is reserved
 
+    // Warning, operator== is not case sensitive, so if we have "a" and "A" then it will return true
     bool operator==(const string& rhs) const; // O(n)
     bool operator!=(const string& rhs) const; // O(n)
 
@@ -92,4 +93,8 @@ private:
     size_t curSize;
 };
 
+char toLower(char a);
+
 #endif // StringDef
+
+

@@ -297,9 +297,12 @@ void string::append(char rhs)
 
 bool string::operator==(const string& rhs) const
 {
+    if(curSize != rhs.curSize)
+        return false;
+
     int i = 0;
 
-    while(text[i] == rhs.text[i])
+    while(toLower(text[i]) == toLower(rhs.text[i]))
     {
         if(text[i] == '\0')
             return true;
@@ -388,4 +391,12 @@ void string::copy(const char* newText, size_t newMaxSize)
 
     text[i] = '\0';
     maxSize = newMaxSize;
+}
+
+char toLower(char a)
+{
+    if(a >= 'a' && a <= 'z')
+        return a;
+    else
+        return a - 'A' + 'a';
 }

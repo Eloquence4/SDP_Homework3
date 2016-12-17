@@ -7,7 +7,7 @@
 
 int main(int argc, char* argv[])
 {
-    if(argc == 1)
+    if(argc <= 2)
         std::cout << "Error, not enough launch arguments!\n";
     else
     {
@@ -28,7 +28,17 @@ int main(int argc, char* argv[])
 
         for(int i = 2; i < argc; i++)
         {
-            // Evaluate each file here
+            files.open(argv[i], std::ios::in);
+            if(!files)
+            {
+                files.close();
+                std::cout << "Error, could not open file!\n";
+            }
+            else
+            {
+                std::cout << argv[i] << ' ' << evaluate(dictionaryTree, files) << "\n";
+                files.close();
+            }
         }
     }
     
