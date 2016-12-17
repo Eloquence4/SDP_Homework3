@@ -397,6 +397,7 @@ char toLower(char a)
 {
     if(a >= 'a' && a <= 'z')
         return a;
-    else
+    else if(a >= 'A' && a <= 'Z')
         return a - 'A' + 'a';
+	else return a;
 }
