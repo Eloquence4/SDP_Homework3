@@ -380,17 +380,20 @@ void string::delStr()
 
 void string::copy(const char* newText, size_t newMaxSize)
 {
-    text = new char[newMaxSize+1];
+    char* tmpStr = new char[newMaxSize+1];
 
     int i;
 
     for(i = 0; newText[i] != '\0'; i++)
-        text[i] = newText[i];
+        tmpStr[i] = newText[i];
 
     curSize = i;
 
-    text[i] = '\0';
+    tmpStr[i] = '\0';
     maxSize = newMaxSize;
+
+    delete[] text;
+    text = tmpStr;
 }
 
 char toLower(char a)
